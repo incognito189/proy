@@ -16,11 +16,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from mi_app import views  # Asegúrate que esta importación es correcta
+from django.urls import path, include
+from django.views.generic.base import RedirectView
+from mi_app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home, name='home'),
-    path('login/', views.login_view, name='login'),  # Ahora la vista existe
+    path('login/', views.login_view, name='login'),
+    path('home/', views.home, name='home'),
+    path('', RedirectView.as_view(url='/login/', permanent=True)),  # Redirige raíz a login
 ]
